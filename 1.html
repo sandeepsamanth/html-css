@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Student Management System</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<div class="container">
+		<h1>Student Management System</h1>
+		<form id="add-student-form">
+			<h2>Add Student</h2>
+			<label for="name">Name:</label>
+			<input type="text" id="name" name="name" required>
+
+			<label for="age">Age:</label>
+			<input type="number" id="age" name="age" required>
+
+			<label for="grade">Grade:</label>
+			<input type="text" id="grade" name="grade" required>
+
+			<label for="degree">Degree:</label>
+			<input type="text" id="degree" name="degree" required>
+
+			<label for="email">Email:</label>
+			<input type="email" id="email" name="email" required>
+
+			<button type="submit" id="add-student-btn">Add Student</button>
+			<button type="button" id="update-student-btn" style="display: none;">Update Student</button>
+			<button type="button" id="cancel-update-btn" style="display: none;">Cancel</button>
+		</form>
+
+		<div id="search-container">
+			<label for="search">Search:</label>
+			<input type="text" id="search" name="search">
+		</div>
+
+		<table id="students-table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Age</th>
+					<th>Grade</th>
+					<th>Degree</th>
+					<th>Email</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody id="students-list">
+			</tbody>
+		</table>
+	</div>
+
+	<script src="app.js"></script>
+</body>
+</html>
