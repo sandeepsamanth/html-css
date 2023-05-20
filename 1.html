@@ -1,56 +1,200 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Student Management System</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
+  <meta charset="UTF-8">
+  <title>User Filter</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 10px;
+      width: 300px;
+    }
+
+    .form-group label {
+      margin-bottom: 5px;
+    }
+
+    .form-group input[type="text"],
+    .form-group select {
+      padding: 5px;
+    }
+
+    .btn {
+      padding: 5px 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+
+    .card {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 10px;
+      width: 300px;
+    }
+  </style>
 </head>
 <body>
-	<div class="container">
-		<h1>Student Management System</h1>
-		<form id="add-student-form">
-			<h2>Add Student</h2>
-			<label for="name">Name:</label>
-			<input type="text" id="name" name="name" required>
 
-			<label for="age">Age:</label>
-			<input type="number" id="age" name="age" required>
 
-			<label for="grade">Grade:</label>
-			<input type="text" id="grade" name="grade" required>
 
-			<label for="degree">Degree:</label>
-			<input type="text" id="degree" name="degree" required>
+  <div id="userList"></div>
 
-			<label for="email">Email:</label>
-			<input type="email" id="email" name="email" required>
+  
 
-			<button type="submit" id="add-student-btn">Add Student</button>
-			<button type="button" id="update-student-btn" style="display: none;">Update Student</button>
-			<button type="button" id="cancel-update-btn" style="display: none;">Cancel</button>
-		</form>
+  <script>
+    // JavaScript code here...
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>User Filter</title>
+  <style>
+    .card {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    
+    .form-group {
+      margin-bottom: 10px;
+    }
+    
+    .btn {
+      padding: 5px 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-group">
+    <label for="profession">Profession:</label>
+    <select id="profession">
+      <option value="">Select</option>
+      <option value="developer">Developer</option>
+      <option value="admin">Admin</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <button id="filterBtn" class="btn">Filter</button>
+  </div>
+  
+  <div id="userList"></div>
+  
+  <div class="form-group">
+    <label for="name">Name:</label>
+    <input type="text" id="name">
+  </div>
+  <div class="form-group">
+    <label for="age">Age:</label>
+    <input type="text" id="age">
+  </div>
+  <div class="form-group">
+    <label for="newProfession">Profession:</label>
+    <input type="text" id="newProfession">
+  </div>
+  <div class="form-group">
+    <button id="addUserBtn" class="btn">Add User</button>
+  </div>
 
-		<div id="search-container">
-			<label for="search">Search:</label>
-			<input type="text" id="search" name="search">
-		</div>
+  <script>
+    const users = [
+      {id: 1, name: "John", age: "18", profession: "developer"},
+      {id: 2, name: "Jack", age: "20", profession: "developer"},
+      {id: 3, name: "Karen", age: "19", profession: "admin"}
+    ];
 
-		<table id="students-table">
-			<thead>
-				<tr>
-					<th>ID</th>
-					<th>Name</th>
-					<th>Age</th>
-					<th>Grade</th>
-					<th>Degree</th>
-					<th>Email</th>
-					<th>Actions</th>
-				</tr>
-			</thead>
-			<tbody id="students-list">
-			</tbody>
-		</table>
-	</div>
+    function renderUser(user) {
+      const userList = document.getElementById('userList');
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `<p>ID: ${user.id}</p>
+                        <p>Name: ${user.name}</p>
+                        <p>Age: ${user.age}</p>
+                        <p>Profession: ${user.profession}</p>`;
+      userList.appendChild(card);
+    }
 
-	<script src="app.js"></script>
+    function filterUsers() {
+      const professionSelect = document.getElementById('profession');
+      const selectedProfession = professionSelect.value;
+
+      if (selectedProfession === '') {
+        alert('Please select a profession before clicking the button.');
+        return;
+      }
+
+      const filteredUsers = users.filter(user => user.profession === selectedProfession);
+      const userList = document.getElementById('userList');
+      userList.innerHTML = '';
+
+      filteredUsers.forEach(user => {
+        renderUser(user);
+      });
+    }
+
+    function addUser() {
+      const nameInput = document.getElementById('name');
+      const ageInput = document.getElementById('age');
+      const professionInput = document.getElementById('newProfession');
+
+      const name = nameInput.value;
+      const age = ageInput.value;
+      const profession = professionInput.value;
+
+      if (name === '' || age === '' || profession === '') {
+        alert('Please enter all fields before adding a user.');
+        return;
+      }
+
+      const newUser = {
+        id: users.length + 1,
+        name: name,
+        age: age,
+        profession: profession
+      };
+
+      users.push(newUser);
+      renderUser(newUser);
+
+      nameInput.value = '';
+      ageInput.value = '';
+      professionInput.value = '';
+    }
+
+    const filterBtn = document.getElementById('filterBtn');
+    filterBtn.addEventListener('click', filterUsers);
+
+    const addUserBtn = document.getElementById('addUserBtn');
+    addUserBtn.addEventListener('click', addUser);
+  </script>
 </body>
 </html>
